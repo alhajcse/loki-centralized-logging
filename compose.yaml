@@ -1,0 +1,14 @@
+services:
+  loki:
+    image: grafana/loki:3.7.8
+    container_name: loki
+    restart: unless-stopped
+    command:
+      - -config.file=/etc/loki/loki.yaml
+    ports:
+      - "${LOKI_BIND_IP:-10.70.16.235}:3100:3100"
+    volumes:
+      - ./config/loki.yaml:/etc/loki/loki.yaml:ro
+      - /opt/loki/data:/loki
+    security_opt:
+      - no-new-privileges:true
